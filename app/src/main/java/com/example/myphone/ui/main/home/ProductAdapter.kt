@@ -7,7 +7,7 @@ import com.example.myphone.data.model.Product
 import com.example.myphone.databinding.ItemProductBinding
 import java.text.NumberFormat
 import java.util.Locale
-
+import com.bumptech.glide.Glide
 
 class ProductAdapter(
     private val onDetailClick: (Product) -> Unit,
@@ -36,12 +36,12 @@ class ProductAdapter(
     inner class ProductViewHolder(private val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product) {
             binding.tvProductName.text = product.name
-
             // Format tiền Việt Nam
             val formatter = NumberFormat.getCurrencyInstance(Locale("vi", "VN"))
             binding.tvProductPrice.text = formatter.format(product.price)
-            binding.ivProductImage.setImageResource(com.example.myphone.R.drawable.ip15prm)
-
+            Glide.with(binding.root.context)
+                .load(product.imageUrl) // Lấy link ảnh từ Model
+                .into(binding.ivProductImage) // Đổ vào ImageView
             // Sự kiện click
             binding.ivProductImage.setOnClickListener { onDetailClick(product) }
             binding.btnInfo.setOnClickListener { onDetailClick(product) }

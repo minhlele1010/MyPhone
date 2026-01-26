@@ -34,15 +34,12 @@ class CartAdapter(
         fun bind(item: CartItem) {
             binding.tvCartName.text = item.product.name
             binding.tvCartQuantity.text = "Số lượng: ${item.quantity}"
-
             // Tính tiền = Giá x Số lượng
             val totalItemPrice = item.product.price * item.quantity
             val formatter = NumberFormat.getCurrencyInstance(Locale("vi", "VN"))
             binding.tvCartPrice.text = formatter.format(totalItemPrice)
-
             // Ảnh Offline
             binding.ivCartImage.setImageResource(com.example.myphone.R.drawable.ip17prm)
-
             // Nút xóa
             binding.btnDelete.setOnClickListener {
                 onDeleteClick(item)

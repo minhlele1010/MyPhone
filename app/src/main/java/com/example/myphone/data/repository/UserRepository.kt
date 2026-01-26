@@ -49,7 +49,4 @@ object UserRepository {
             .addOnFailureListener { onComplete(false) }
     }
 
-    fun signOut() {
-        auth.signOut()
-    }
 }

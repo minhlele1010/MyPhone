@@ -26,7 +26,6 @@ class CartViewModel : ViewModel() {
         CartRepository.getCartItems { list ->
             // Khi có danh sách, cập nhật LiveData
             _cartItems.value = list
-
             // Tính tổng tiền ngay tại đây (Thay vì gọi repo)
             calculateTotalPrice(list)
         }

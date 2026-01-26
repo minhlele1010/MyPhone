@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myphone.data.model.User
 import com.example.myphone.data.repository.UserRepository
-
+import com.example.myphone.data.repository.AuthRepository
 class ProfileViewModel : ViewModel() {
 
     private val _user = MutableLiveData<User>()
@@ -46,8 +46,7 @@ class ProfileViewModel : ViewModel() {
     fun resetUpdateStatus() {
         _updateStatus.value = null
     }
-
     fun logout() {
-        UserRepository.signOut()
+        AuthRepository.logout()
     }
 }

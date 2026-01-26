@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="24dp"
-    android:background="#2193b0"> <TextView
+    android:padding="20dp"
+    android:background="#EEF">
+    <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="Cập nhật thông tin"
-    android:textColor="#FFFFFF"
+    android:textColor="#2C3E50"
     android:textSize="20sp"
     android:textStyle="bold"
     android:gravity="center"

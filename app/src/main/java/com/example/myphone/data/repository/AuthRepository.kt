@@ -5,19 +5,16 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 object AuthRepository {
-
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance() // Thêm dòng này
-
     fun getCurrentUser() = firebaseAuth.currentUser
-
     // 1. ĐĂNG KÝ (Sửa: Thêm tham số fullName và logic lưu Firestore)
     fun register(
         email: String,
         pass: String,
         fullName: String,
         onResult: (Boolean, String?) -> Unit
-    ) {
+    ){
         // A. Tạo tài khoản Authentication
         firebaseAuth.createUserWithEmailAndPassword(email, pass)
             .addOnCompleteListener { task ->
@@ -48,7 +45,7 @@ object AuthRepository {
             }
     }
 
-    // 2. ĐĂNG NHẬP (Giữ nguyên)
+    // 2. ĐĂNG NHẬP
     fun login(email: String, pass: String, onResult: (Boolean, String?) -> Unit) {
         firebaseAuth.signInWithEmailAndPassword(email, pass)
             .addOnCompleteListener { task ->
@@ -59,8 +56,7 @@ object AuthRepository {
                 }
             }
     }
-
-    // 3. ĐĂNG XUẤT (Giữ nguyên)
+    // 3. ĐĂNG XUẤT
     fun logout() {
         firebaseAuth.signOut()
     }

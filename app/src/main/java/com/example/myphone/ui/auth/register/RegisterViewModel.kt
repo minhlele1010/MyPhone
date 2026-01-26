@@ -4,28 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myphone.data.repository.AuthRepository
-
+import com.example.myphone.utils.Resource
 class RegisterViewModel : ViewModel() {
 
-    private val _registerResult = MutableLiveData<RegisterResult>()
-    val registerResult: LiveData<RegisterResult> = _registerResult
-
+    private val _registerResult = MutableLiveData<Resource<Boolean>>()
+    val registerResult: LiveData<Resource<Boolean>> = _registerResult
     fun register(fullName: String, email: String, pass: String) {
-        _registerResult.value = RegisterResult.Loading
+        _registerResult.value = Resource.Loading
 
         // Đã sửa: Truyền fullName vào đây
         AuthRepository.register(email, pass, fullName) { isSuccess, message ->
             if (isSuccess) {
-                _registerResult.value = RegisterResult.Success
+                _registerResult.value = Resource.Success(true)
             } else {
-                _registerResult.value = RegisterResult.Error(message ?: "Đăng ký thất bại")
+                _registerResult.value = Resource.Error(message ?: "Đăng ký thất bại")
             }
         }
     }
-}
-
-sealed class RegisterResult {
-    object Loading : RegisterResult()
-    object Success : RegisterResult()
-    data class Error(val message: String) : RegisterResult()
 }
