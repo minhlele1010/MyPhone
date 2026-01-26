@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">MyPhone</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_title">MyPhone Store</string>
+    <string name="login_email_hint">Email đăng nhập</string>
+    <string name="password_hint">Mật khẩu</string>
+    <string name="login_button_text">ĐĂNG NHẬP</string>
+    <string name="no_account_register_text">Chưa có tài khoản? Đăng ký ngay</string>
+
+    <!-- Register Screen -->
+    <string name="register_title">Tạo tài khoản</string>
+    <string name="full_name_hint">Họ và tên</string>
+    <string name="register_button_text">ĐĂNG KÝ</string>
+    <string name="already_have_account_login_text">Đã có tài khoản? Đăng nhập</string>
+</resources>
