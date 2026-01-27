@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels // Import cái này
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -16,12 +15,10 @@ import com.example.myphone.R
 import com.example.myphone.data.model.Product
 import com.example.myphone.databinding.FragmentProductDetailBinding
 import com.example.myphone.ui.main.cart.CartViewModel // Import ViewModel Cart
-import java.text.NumberFormat
-import java.util.Locale
 import com.example.myphone.ui.base.BaseFragment
+import androidx.core.graphics.drawable.toDrawable
 
 class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(FragmentProductDetailBinding::inflate) {
-
 
     // 1. Khai báo ViewModel để xử lý thêm giỏ hàng
     private val cartViewModel: CartViewModel by viewModels()
@@ -36,10 +33,6 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(Fragmen
             Toast.makeText(context, "Lỗi không tìm thấy sản phẩm", Toast.LENGTH_SHORT).show()
             findNavController().popBackStack()
         }
-        binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
-        }
-
         // 2. Lắng nghe kết quả thêm giỏ hàng
         observeData()
     }
@@ -48,8 +41,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(Fragmen
         binding.tvProductName.text = product.name
         binding.tvProductDesc.text = product.description
 
-        val formatter = NumberFormat.getCurrencyInstance(Locale("vi", "VN"))
-        binding.tvProductPrice.text = formatter.format(product.price)
+        binding.tvProductPrice.text = formatMoney(product.price)
         Glide.with(binding.root.context)
             .load(product.imageUrl) // Lấy link ảnh từ Model
             .into(binding.ivProductImage) // Đổ vào ImageView
@@ -77,11 +69,10 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(Fragmen
         builder.setCancelable(false)
 
         val dialog = builder.create()
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
         btnOk.setOnClickListener {
             dialog.dismiss()
         }
-
         dialog.show()
     }
 }

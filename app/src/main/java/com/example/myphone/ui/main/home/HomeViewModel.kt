@@ -5,9 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myphone.data.model.Product
 import com.example.myphone.data.repository.ProductRepository
-import java.text.Normalizer
-import java.util.regex.Pattern
 
+enum class SortType {
+    PRICE_ASC,  // Giá thấp -> cao
+    PRICE_DESC, // Giá cao -> thấp
+    NAME_AZ     // Tên A -> Z
+}
 class HomeViewModel : ViewModel() {
 
     // LiveData để UI lắng nghe và hiển thị
@@ -45,6 +48,17 @@ class HomeViewModel : ViewModel() {
         // Cập nhật danh sách đã lọc lên UI
         _products.value = filteredList
     }
+    fun sortProducts(type: SortType) {
+        val currentList = _products.value ?: return // Lấy danh sách hiện tại
 
+        // Tạo danh sách mới đã sắp xếp (Sorted List)
+        val sortedList = when (type) {
+            SortType.PRICE_ASC -> currentList.sortedBy { it.price }
+            SortType.PRICE_DESC -> currentList.sortedByDescending { it.price }
+            SortType.NAME_AZ -> currentList.sortedBy { it.name }
+        }
 
+        // Cập nhật lại LiveData để UI tự đổi
+        _products.value = sortedList
+    }
 }

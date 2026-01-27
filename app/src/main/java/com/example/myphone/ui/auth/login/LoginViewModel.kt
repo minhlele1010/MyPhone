@@ -23,10 +23,3 @@ class LoginViewModel : ViewModel() {
         }
     }
 }
-
-// ▼▼▼ PHẦN QUAN TRỌNG: ĐỊNH NGHĨA CÁC TRẠNG THÁI ▼▼▼
-//sealed class LoginResult {
-//    object Loading : LoginResult()
-//    object Success : LoginResult()
-//    data class Error(val message: String) : LoginResult()
-//}

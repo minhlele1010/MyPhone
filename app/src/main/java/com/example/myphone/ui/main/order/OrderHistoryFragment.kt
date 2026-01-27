@@ -2,11 +2,10 @@ package com.example.myphone.ui.main.order
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
+
+
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myphone.R
 import com.example.myphone.databinding.FragmentOrderHistoryBinding
 import com.example.myphone.ui.base.BaseFragment
 class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding>(FragmentOrderHistoryBinding::inflate) {

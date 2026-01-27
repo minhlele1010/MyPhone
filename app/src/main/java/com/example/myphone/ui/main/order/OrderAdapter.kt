@@ -1,5 +1,6 @@
 package com.example.myphone.ui.main.order
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -32,6 +33,7 @@ class OrderAdapter : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
 
      class OrderViewHolder(private val binding: ItemOrderBinding) : RecyclerView.ViewHolder(binding.root) {
 
+        @SuppressLint("SetTextI18n")
         fun bind(order: Order) {
             // 1. Mã đơn hàng (Lấy 6 ký tự cuối viết hoa cho gọn)
             val shortId = if (order.id.length > 6) order.id.takeLast(6).uppercase() else order.id

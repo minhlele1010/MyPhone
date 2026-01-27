@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.myphone.R
 import com.example.myphone.databinding.FragmentProfileBinding
 import com.example.myphone.ui.auth.AuthActivity
+import androidx.core.graphics.drawable.toDrawable
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
@@ -91,7 +92,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         val dialog = builder.create()
 
         // --- QUAN TRỌNG: Làm trong suốt nền mặc định để thấy được bo góc ---
-        dialog.window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT))
+        dialog.window?.setBackgroundDrawable(android.graphics.Color.TRANSPARENT.toDrawable())
         // ------------------------------------------------------------------
 
         // Xử lý nút LƯU

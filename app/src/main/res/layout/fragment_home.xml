@@ -73,6 +73,13 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:imeOptions="actionDone"/>
+            <ImageButton
+                android:id="@+id/btnFilter"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="8dp"
+                android:src="@android:drawable/ic_menu_sort_by_size"
+                app:tint="#757575" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
