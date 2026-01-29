@@ -6,11 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.myphone.data.model.Product
 import com.example.myphone.data.repository.ProductRepository
 
-enum class SortType {
-    PRICE_ASC,  // Giá thấp -> cao
-    PRICE_DESC, // Giá cao -> thấp
-    NAME_AZ     // Tên A -> Z
-}
+
 class HomeViewModel : ViewModel() {
 
     // LiveData để UI lắng nghe và hiển thị
@@ -18,6 +14,7 @@ class HomeViewModel : ViewModel() {
     val products: LiveData<List<Product>> = _products
     // Biến lưu trữ danh sách gốc (Backup)
     private var originalList = listOf<Product>()
+
     init {
         loadDataFromFirebase()
     }
@@ -26,12 +23,12 @@ class HomeViewModel : ViewModel() {
         ProductRepository.getAllProducts { list ->
             // 1. Lưu lại bản gốc
             originalList = list
-
             // 2. Cập nhật lên UI
             _products.value = list
         }
     }
 
+//tim kiem
     fun searchProduct(query: String) {
         // Nếu ô tìm kiếm trống -> Trả lại danh sách gốc đầy đủ
         if (query.isBlank()) {
@@ -48,6 +45,8 @@ class HomeViewModel : ViewModel() {
         // Cập nhật danh sách đã lọc lên UI
         _products.value = filteredList
     }
+
+    //loc san pham
     fun sortProducts(type: SortType) {
         val currentList = _products.value ?: return // Lấy danh sách hiện tại
 
@@ -61,4 +60,9 @@ class HomeViewModel : ViewModel() {
         // Cập nhật lại LiveData để UI tự đổi
         _products.value = sortedList
     }
+}
+enum class SortType {
+    PRICE_ASC,  // Giá thấp -> cao
+    PRICE_DESC, // Giá cao -> thấp
+    NAME_AZ     // Tên A -> Z
 }

@@ -1,23 +1,20 @@
 package com.example.myphone.ui.auth.register
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myphone.R
 import com.example.myphone.databinding.FragmentRegisterBinding
 import com.example.myphone.utils.Resource
 import com.example.myphone.ui.base.BaseFragment
-import com.example.myphone.ui.main.MainActivity
+import androidx.core.graphics.drawable.toDrawable
 
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterBinding::inflate) {
     private val viewModel: RegisterViewModel by viewModels()
@@ -29,7 +26,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     }
 
     private fun setupClickListeners() {
-        binding.btnRegister?.setOnClickListener {
+        binding.btnRegister.setOnClickListener {
             val fullName = binding.etFullName.text.toString().trim()
             val email = binding.etEmail.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
@@ -39,7 +36,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                 Toast.makeText(requireContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
             }
         }
-            binding.tvGoToLogin?.setOnClickListener {
+            binding.tvGoToLogin.setOnClickListener {
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
     }
@@ -76,7 +73,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         val dialog = builder.create()
 
         // 3. Làm trong suốt background mặc định của Dialog để thấy bo góc của CardView
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
 
         // 4. Xử lý sự kiện nút OK
         val btnOk = dialogView.findViewById<Button>(R.id.btnOKFailRegister)
@@ -96,7 +93,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         val dialog = builder.create()
 
         // 3. Làm trong suốt background mặc định của Dialog để thấy bo góc của CardView
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
 
         // 4. Xử lý sự kiện nút OK
         val btnOk = dialogView.findViewById<Button>(R.id.btnOKSuccessRegister)

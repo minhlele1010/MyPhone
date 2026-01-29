@@ -19,13 +19,18 @@ import com.example.myphone.utils.Resource
 import androidx.core.graphics.drawable.toDrawable
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel : LoginViewModel by viewModels()
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupClickListeners()
+        observeViewModel()
+    }
     private fun observeViewModel() {
         viewModel.loginResult.observe(viewLifecycleOwner) { resource ->
             when (resource) {
                 is Resource.Loading -> {
-                    binding.progressBar.isVisible = true
+                    binding.progressBar.isVisible = true//hien vong xoay
                     binding.btnLogin.isEnabled = false
                 }
                 is Resource.Success -> {
@@ -42,11 +47,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupClickListeners()
-        observeViewModel()
-    }
 //gán sự kiện các nút
     private fun setupClickListeners() {
         binding.btnLogin.setOnClickListener {

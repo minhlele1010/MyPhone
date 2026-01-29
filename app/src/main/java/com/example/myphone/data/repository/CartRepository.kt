@@ -13,14 +13,17 @@ object CartRepository {
 
     // 1. Thêm vào giỏ
     fun addToCart(product: Product, onComplete: (Boolean) -> Unit) {
-        val uid = auth.currentUser?.uid
+        val uid = auth.currentUser?.uid //lấy id người dùng hiện tại
         if (uid == null) {
             onComplete(false)
             return
         }
+        // Tạo đường dẫn đến sản phẩm trong giỏ: users -> [ID người dùng] -> cart -> [ID sản phẩm]
         val cartRef = db.collection("users").document(uid)
             .collection("cart").document(product.id)
+        // Đọc thử xem sản phẩm này đã có trong giỏ chưa
         cartRef.get().addOnSuccessListener { document ->
+
             if (document.exists()) {
                 val currentQuantity = document.getLong("quantity")?.toInt() ?: 0
                 cartRef.update("quantity", currentQuantity + 1)
@@ -34,18 +37,19 @@ object CartRepository {
             }
         }.addOnFailureListener { onComplete(false) }
     }
-    // 2. Lấy danh sách (Giữ nguyên nhưng nhớ logic callback)
+
+    // 2. Lấy danh sách giỏ hàng
     fun getCartItems(onResult: (List<CartItem>) -> Unit) {
         val uid = auth.currentUser?.uid
         if (uid == null) {
-            onResult(emptyList())
+            onResult(emptyList())//trả về list rỗng nếu chưa login
             return
         }
         db.collection("users").document(uid).collection("cart")
             .get()
             .addOnSuccessListener { result ->
                 val list = result.toObjects(CartItem::class.java)
-                onResult(list)
+                onResult(list)//trả list về cho viewmodel
             }
             .addOnFailureListener {
                 onResult(emptyList())
@@ -63,21 +67,7 @@ object CartRepository {
             .addOnFailureListener { onComplete(false) }
     }
 
-    // 4. Xóa sạch giỏ hàng - Thanh toán
-    fun clearCart(onComplete: (Boolean) -> Unit) {
-        val uid = auth.currentUser?.uid ?: return
-        val collectionRef = db.collection("users").document(uid).collection("cart")
-        // Firestore không có hàm "xóa cả collection" nên phải lấy hết ra rồi xóa từng cái
-        collectionRef.get().addOnSuccessListener { snapshot ->
-            val batch = db.batch() // Dùng Batch để xóa 1 thể cho nhanh
-            for (document in snapshot.documents) {
-                batch.delete(document.reference)
-            }
-            batch.commit()
-                .addOnSuccessListener { onComplete(true) }
-                .addOnFailureListener { onComplete(false) }
-        }
-    }
+    //hàm thanh toán
 
     fun checkoutOrder(
         currentItems: List<CartItem>,
@@ -85,7 +75,7 @@ object CartRepository {
         onComplete: (Boolean) -> Unit
     ) {
         val uid = auth.currentUser?.uid ?: return
-        // A. Tạo tham chiếu cho đơn hàng mới
+        // A. Tạo id ngẫu nhiên cho đơn hàng mới
         val ordersRef = db.collection("users").document(uid).collection("orders").document()
         // B. Tạo đối tượng Order
         val newOrder = Order(
@@ -96,7 +86,7 @@ object CartRepository {
         )
         // C. Dùng BATCH để thực hiện cùng lúc: Ghi Order + Xóa Cart
         db.runBatch { batch ->
-            // 1. Ghi đơn hàng vào bảng 'orders'
+            // 1. Lưu đơn hàng vào bảng 'orders'
             batch.set(ordersRef, newOrder)
             // 2. Xóa từng món trong bảng 'cart'
             val cartCollection = db.collection("users").document(uid).collection("cart")

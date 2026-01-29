@@ -2,7 +2,6 @@ package com.example.myphone.ui.main.detail
 
 import android.app.AlertDialog
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,11 +35,9 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(Fragmen
         // 2. Lắng nghe kết quả thêm giỏ hàng
         observeData()
     }
-
     private fun setupViews(product: Product) {
         binding.tvProductName.text = product.name
         binding.tvProductDesc.text = product.description
-
         binding.tvProductPrice.text = formatMoney(product.price)
         Glide.with(binding.root.context)
             .load(product.imageUrl) // Lấy link ảnh từ Model

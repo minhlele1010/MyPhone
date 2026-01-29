@@ -16,14 +16,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 1. Tìm cái khung NavHostFragment từ giao diện
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_main) as NavHostFragment
 
-        // 2. Lấy bộ điều khiển (Controller) của nó
         val navController = navHostFragment.navController
-
-        // 3. Kết nối BottomNavigation với NavController
         binding.bottomNav.setupWithNavController(navController)
     }
 }

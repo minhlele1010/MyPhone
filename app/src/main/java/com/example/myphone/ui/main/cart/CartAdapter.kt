@@ -10,6 +10,7 @@ import com.example.myphone.databinding.ItemCartBinding
 import java.text.NumberFormat
 import java.util.Locale
 
+
 class CartAdapter(
     private val onDeleteClick: (CartItem) -> Unit
 ) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {

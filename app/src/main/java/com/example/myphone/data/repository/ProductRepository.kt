@@ -1,6 +1,6 @@
 package com.example.myphone.data.repository
 
-import com.example.myphone.R
+
 import com.example.myphone.data.model.Product
 import com.google.firebase.firestore.FirebaseFirestore
 object ProductRepository {
@@ -19,7 +19,6 @@ object ProductRepository {
                     val product = document.toObject(Product::class.java)
                     list.add(product)
                 }
-
                 // Trả danh sách về cho ViewModel qua callback
                 onResult(list)
             }

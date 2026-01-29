@@ -19,11 +19,11 @@ class CartViewModel : ViewModel() {
     private val _tempPrice = MutableLiveData(0.0)
     val tempPrice: LiveData<Double> = _tempPrice
 
-    // 2. Số tiền được giảm
+    // so tien giam gia
     private val _discountAmount = MutableLiveData(0.0)
     val discountAmount: LiveData<Double> = _discountAmount
 
-    // 3. Tổng tiền cuối cùng (Sau khi trừ giảm giá)
+    //Tổng tiền cuối cùng (Sau khi trừ giảm giá)
     private val _finalPrice = MutableLiveData(0.0)
     val finalPrice: LiveData<Double> = _finalPrice
 
@@ -37,22 +37,22 @@ class CartViewModel : ViewModel() {
     val addToCartSuccess: LiveData<Boolean> = _addToCartSuccess
 
     // --- CÁC HÀM XỬ LÝ ---
-    // 1. Load dữ liệu (Đã sửa lỗi No value passed for parameter 'onResult')
+    // 1. Load dữ liệu
     fun loadCart() {
-        // Gọi repository và CHỜ kết quả trả về trong { ... }
+        // Gọi repository và CHỜ kết quả trả về trong
         CartRepository.getCartItems { list ->
             // Khi có danh sách, cập nhật LiveData
             _cartItems.value = list
-            // Tính tổng tiền ngay tại đây (Thay vì gọi repo)
+            // Tính tổng tiền ngay tại đây
             calculateTotalPrice(list)
         }
     }
 
-    // LOGIC MÃ GIẢM GIÁ (MỚI)
+    // LOGIC MÃ GIẢM  GIÁ
     fun applyCoupon(code: String) {
         _couponMessage.value = Resource.Loading
         db.collection("coupons")
-            .whereEqualTo("code", code)
+            .whereEqualTo("code", code)//check mã có tồn tại trong db
             .get()
             .addOnSuccessListener { documents ->
                 if (documents.isEmpty) {
@@ -128,7 +128,6 @@ class CartViewModel : ViewModel() {
         val discount = _discountAmount.value ?: 0.0
         var final = tempTotal - discount
         if (final < 0) final = 0.0 // Không cho âm tiền
-
         // 3. Cập nhật giá chốt
         _finalPrice.value = final
     }

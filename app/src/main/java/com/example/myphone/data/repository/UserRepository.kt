@@ -3,7 +3,7 @@ package com.example.myphone.data.repository
 import com.example.myphone.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions // <--- Nhớ Import cái này
+import com.google.firebase.firestore.SetOptions
 
 object UserRepository {
     private val auth = FirebaseAuth.getInstance()
@@ -42,7 +42,6 @@ object UserRepository {
             "address" to address
         )
 
-        // Dùng SET + MERGE: Nếu chưa có thì tạo mới, có rồi thì chỉ sửa 3 trường trên
         db.collection("users").document(uid)
             .set(data, SetOptions.merge())
             .addOnSuccessListener { onComplete(true) }

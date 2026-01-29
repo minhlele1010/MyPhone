@@ -30,21 +30,19 @@ class CartFragment : BaseFragment<FragmentCartBinding>(FragmentCartBinding::infl
         setupRecyclerView()
         setupClickListener()
         observeData()
-        viewModel.loadCart()
+        viewModel.loadCart() //load data
     }
 
-
+// recycle view
     private fun setupRecyclerView() {
-        cartAdapter = CartAdapter { itemToDelete ->
-            showConfirmDeleteDialog(itemToDelete)
+        cartAdapter = CartAdapter { itemToDelete -> showConfirmDeleteDialog(itemToDelete)
         }
         binding.rvCart.apply {
             adapter = cartAdapter
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)//xếp theo chiều dọc
         }
     }
-
-    // 1. Cài đặt các sự kiện bấm nút
+    // Cài đặt các sự kiện bấm nút
     private fun setupClickListener() {
         // Sự kiện nút Áp dụng Coupon
         binding.btnApplyCoupon.setOnClickListener {
@@ -67,11 +65,11 @@ class CartFragment : BaseFragment<FragmentCartBinding>(FragmentCartBinding::infl
         }
         // Sự kiện nút Tiếp tục mua sắm
         binding.btnGoShopping.setOnClickListener {
-            parentFragmentManager.popBackStack()
+            parentFragmentManager.popBackStack()//quay lại fragment trước
         }
     }
 
-    // 2. Lắng nghe dữ liệu từ ViewModel
+    // Lắng nghe dữ liệu từ ViewModel
     @SuppressLint("SetTextI18n")
     private fun observeData() {
         // A. List sản phẩm
@@ -143,8 +141,8 @@ class CartFragment : BaseFragment<FragmentCartBinding>(FragmentCartBinding::infl
         btnCancel.setOnClickListener { dialog.dismiss() }
         btnDelete.setOnClickListener {
             viewModel.removeFromCart(item)
-            dialog.dismiss()
             showSuccessDeleteDialog()
+            dialog.dismiss()
         }
         dialog.show()
     }

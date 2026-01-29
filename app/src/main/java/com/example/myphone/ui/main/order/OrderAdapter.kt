@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+
 class OrderAdapter : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
 
     private var orderList = listOf<Order>()
@@ -47,8 +48,6 @@ class OrderAdapter : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
             val formatter = NumberFormat.getCurrencyInstance(Locale("vi", "VN"))
             binding.tvTotalPrice.text = formatter.format(order.totalPrice)
 
-            // 4. Trạng thái
-//            binding.tvOrderStatus.text = order.status
 
             // 5. Tạo chuỗi tóm tắt sản phẩm: "iPhone 15 (x1), Samsung S24 (x2)"
             val summary = order.items.joinToString(separator = ", ") { item ->
